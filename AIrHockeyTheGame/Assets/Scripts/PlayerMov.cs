@@ -12,15 +12,6 @@ public class PlayerMov : MonoBehaviour
 
     Boundary playerBoundary;
 
-    struct Boundary
-    {
-        public float Top, Bottom, Left, Right;
-        public Boundary(float top, float bottom, float left, float right)
-        {
-            Top = top; Bottom = bottom; Left = left; Right = right;
-        }
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +21,7 @@ public class PlayerMov : MonoBehaviour
         playerBoundary = new Boundary(BoundaryHolder.GetChild(0).position.y,
                                       BoundaryHolder.GetChild(1).position.y,
                                       BoundaryHolder.GetChild(2).position.x,
-                                      BoundaryHolder.GetChild(3).position.x);
+                                      BoundaryHolder.GetChild(3).position.x); 
     }
 
     // Update is called once per frame
@@ -45,7 +36,7 @@ public class PlayerMov : MonoBehaviour
                 if ((mousePos.x >= transform.position.x && mousePos.x < transform.position.x + playerSize.x ||
                mousePos.x <= transform.position.x && mousePos.x > transform.position.x - playerSize.x) &&
                (mousePos.y >= transform.position.y && mousePos.y < transform.position.y + playerSize.y ||
-               mousePos.y <= transform.position.y && mousePos.y > transform.position.y - playerSize.y))
+               mousePos.y <= transform.position.y && mousePos.y > transform.position.y - playerSize.y)) /*revisa el radio del objeto para encontrar la posicion, de encontrarse dentro de este le permite moverse*/
                 {
                     canMove = true;
                 }
@@ -57,7 +48,7 @@ public class PlayerMov : MonoBehaviour
             if (canMove)
             {
                 Vector2 clampedMousePos = new Vector2(Mathf.Clamp(mousePos.x, playerBoundary.Left, playerBoundary.Right), 
-                                                      Mathf.Clamp(mousePos.y, playerBoundary.Bottom, playerBoundary.Top));
+                                                      Mathf.Clamp(mousePos.y, playerBoundary.Bottom, playerBoundary.Top));/*restringe el movimiento*/
                 rb.MovePosition(clampedMousePos);
             }
         }
