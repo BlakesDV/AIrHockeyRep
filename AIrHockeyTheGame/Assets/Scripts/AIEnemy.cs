@@ -15,7 +15,7 @@ public class AIEnemy : MonoBehaviour
     private Boundary miceBoundary;
     private Vector2 targetPos;
     private bool isFirstTimeInOpponentsHalf = true;
-    private float offSetXFromTarget;
+    private float offSetYFromTarget;
 
     
     // Start is called before the first frame update
@@ -39,15 +39,35 @@ public class AIEnemy : MonoBehaviour
     {
         float movSpeed;
 
-        if (mice.position.y < miceBoundary.Bottom)
+        //    if (mice.position.y < miceBoundary.Bottom)
+        //    {
+        //        if (isFirstTimeInOpponentsHalf)
+        //        {
+        //            isFirstTimeInOpponentsHalf = false;
+        //            offSetXFromTarget = Random.Range(-1f, 1f);
+        //        }
+        //        movSpeed = maxMovSpeed * Random.Range(0.1f, 0.3f);
+        //        targetPos = new Vector2(Mathf.Clamp(mice.position.x + offSetXFromTarget, playerBoundary.Left, playerBoundary.Right), startPos.y);
+        //    }
+        //    else
+        //    {
+        //        isFirstTimeInOpponentsHalf = true;
+        //        movSpeed = Random.Range(maxMovSpeed * 0.4f, maxMovSpeed);
+        //        targetPos = new Vector2(Mathf.Clamp(mice.position.x, playerBoundary.Left, playerBoundary.Right), 
+        //                                Mathf.Clamp(mice.position.y, playerBoundary.Bottom, playerBoundary.Top));
+        //    }
+        //    rb.MovePosition(Vector2.MoveTowards(rb.position, targetPos, movSpeed * Time.fixedDeltaTime));
+        
+
+        if (mice.position.x < miceBoundary.Right)
         {
             if (isFirstTimeInOpponentsHalf)
             {
                 isFirstTimeInOpponentsHalf = false;
-                offSetXFromTarget = Random.Range(-1f, 1f);
+                offSetYFromTarget = Random.Range(-1f, 1f);
             }
             movSpeed = maxMovSpeed * Random.Range(0.1f, 0.3f);
-            targetPos = new Vector2(Mathf.Clamp(mice.position.x + offSetXFromTarget, playerBoundary.Left, playerBoundary.Right), startPos.y);
+            targetPos = new Vector2(Mathf.Clamp(mice.position.y + offSetYFromTarget, playerBoundary.Top, playerBoundary.Bottom), startPos.x);
         }
         else
         {
