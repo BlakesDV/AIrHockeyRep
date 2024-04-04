@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class MiceScript : MonoBehaviour
 {
-    //script using resocoder tutorial
-
     public ScoreScript ScoreScriptInstance;
     public static bool WasGoal { get; private set; }
-    public float MaxSpeed;
-
-
     private Rigidbody2D rb;
 
     // Use this for initialization
@@ -28,36 +23,25 @@ public class MiceScript : MonoBehaviour
             {
                 ScoreScriptInstance.Increment(ScoreScript.Score.PlayerScore);
                 WasGoal = true;
-                StartCoroutine(ResetPuck(false));
+                StartCoroutine(ResetPuck());
             }
             else if (other.tag == "PlayerGoal")
             {
                 ScoreScriptInstance.Increment(ScoreScript.Score.AiScore);
                 WasGoal = true;
-                StartCoroutine(ResetPuck(true));
+                StartCoroutine(ResetPuck());
             }
         }
     }
 
-    private IEnumerator ResetPuck(bool didAiScore)
+    private IEnumerator ResetPuck()
     {
         yield return new WaitForSecondsRealtime(1);
         WasGoal = false;
         rb.velocity = rb.position = new Vector2(0, 0);
-
-        if (didAiScore)
-            rb.position = new Vector2(-1, 0);
-        else
-            rb.position = new Vector2(1, 0);
     }
-
-    public void CenterPuck()
+    public void CenterMice()
     {
         rb.position = new Vector2(0, 0);
-    }
-
-    private void FixedUpdate()
-    {
-        rb.velocity = Vector2.ClampMagnitude(rb.velocity, MaxSpeed);
     }
 }

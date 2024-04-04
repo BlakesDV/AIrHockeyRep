@@ -6,20 +6,15 @@ using TMPro;
 
 public class ScoreScript : MonoBehaviour
 {
-    //script with resocoder tutorial
     public enum Score
     {
         AiScore, PlayerScore
     }
 
-    public Text AiScoreTxt, PlayerScoreTxt;
-
-    public UiManager uiManager;
-
-    public int MaxScore;
-
-    #region Scores
+    public TMP_Text AiScoreTxt, PlayerScoreTxt;
     private int aiScore, playerScore;
+    public UiManager uiManager;
+    public int MaxScore;
 
     private int AiScore
     {
@@ -42,14 +37,12 @@ public class ScoreScript : MonoBehaviour
                 uiManager.ShowRestartCanvas(false);
         }
     }
-    #endregion
-
     public void Increment(Score whichScore)
     {
         if (whichScore == Score.AiScore)
-            AiScoreTxt.text = (++AiScore).ToString();
+            AiScoreTxt.text = (++aiScore).ToString();
         else
-            PlayerScoreTxt.text = (++PlayerScore).ToString();
+            PlayerScoreTxt.text = (++playerScore).ToString();
     }
 
     public void ResetScores()
@@ -57,5 +50,4 @@ public class ScoreScript : MonoBehaviour
         AiScore = PlayerScore = 0;
         AiScoreTxt.text = PlayerScoreTxt.text = "0";
     }
-
 }

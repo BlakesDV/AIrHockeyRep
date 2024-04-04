@@ -45,7 +45,7 @@ public class UiManager : MonoBehaviour
         CanvasRestart.SetActive(false);
 
         scoreScript.ResetScores();
-        MiceScript.CenterPuck();
+        MiceScript.CenterMice();
         playerMovement.ResetPosition();
         aiScript.ResetPosition();
     }
