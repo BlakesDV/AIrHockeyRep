@@ -6,17 +6,20 @@ public class PlayerMov : MonoBehaviour
 {
     bool clicked = true;
     bool canMove;
-    Vector2 playerSize;
+    Vector2 startingPosition;
     Rigidbody2D rb;
     public Transform BoundaryHolder;
+    Collider2D playerCollider;
 
     Boundary playerBoundary;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerSize = GetComponent<SpriteRenderer>().bounds.extents;
+        //playerSize = GetComponent<SpriteRenderer>().bounds.extents;
         rb = GetComponent<Rigidbody2D>();
+        startingPosition = rb.position;
+        playerCollider = GetComponent<Collider2D>();
 
         playerBoundary = new Boundary(BoundaryHolder.GetChild(0).position.y,
                                       BoundaryHolder.GetChild(1).position.y,
@@ -33,10 +36,11 @@ public class PlayerMov : MonoBehaviour
             if (clicked)
             {
                 clicked = false;
-                if ((mousePos.x >= transform.position.x && mousePos.x < transform.position.x + playerSize.x ||
-               mousePos.x <= transform.position.x && mousePos.x > transform.position.x - playerSize.x) &&
-               (mousePos.y >= transform.position.y && mousePos.y < transform.position.y + playerSize.y ||
-               mousePos.y <= transform.position.y && mousePos.y > transform.position.y - playerSize.y)) /*revisa el radio del objeto para encontrar la posicion, de encontrarse dentro de este le permite moverse*/
+               // if ((mousePos.x >= transform.position.x && mousePos.x < transform.position.x + playerSize.x ||
+               //mousePos.x <= transform.position.x && mousePos.x > transform.position.x - playerSize.x) &&
+               //(mousePos.y >= transform.position.y && mousePos.y < transform.position.y + playerSize.y ||
+               //mousePos.y <= transform.position.y && mousePos.y > transform.position.y - playerSize.y)) /*revisa el radio del objeto para encontrar la posicion, de encontrarse dentro de este le permite moverse*/
+               if (playerCollider.OverlapPoint(mousePos))
                 {
                     canMove = true;
                 }
@@ -56,5 +60,9 @@ public class PlayerMov : MonoBehaviour
         {
             clicked = true;
         }
+    }
+    public void ResetPosition()
+    {
+        rb.position = startingPosition;
     }
 }

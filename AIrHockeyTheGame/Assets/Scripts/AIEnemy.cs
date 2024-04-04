@@ -37,45 +37,31 @@ public class AIEnemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float movSpeed;
+        if (!MiceScript.WasGoal) { 
+            float movSpeed;
 
-        //    if (mice.position.y < miceBoundary.Bottom)
-        //    {
-        //        if (isFirstTimeInOpponentsHalf)
-        //        {
-        //            isFirstTimeInOpponentsHalf = false;
-        //            offSetXFromTarget = Random.Range(-1f, 1f);
-        //        }
-        //        movSpeed = maxMovSpeed * Random.Range(0.1f, 0.3f);
-        //        targetPos = new Vector2(Mathf.Clamp(mice.position.x + offSetXFromTarget, playerBoundary.Left, playerBoundary.Right), startPos.y);
-        //    }
-        //    else
-        //    {
-        //        isFirstTimeInOpponentsHalf = true;
-        //        movSpeed = Random.Range(maxMovSpeed * 0.4f, maxMovSpeed);
-        //        targetPos = new Vector2(Mathf.Clamp(mice.position.x, playerBoundary.Left, playerBoundary.Right), 
-        //                                Mathf.Clamp(mice.position.y, playerBoundary.Bottom, playerBoundary.Top));
-        //    }
-        //    rb.MovePosition(Vector2.MoveTowards(rb.position, targetPos, movSpeed * Time.fixedDeltaTime));
-        
-
-        if (mice.position.x < miceBoundary.Right)
-        {
-            if (isFirstTimeInOpponentsHalf)
+            if (mice.position.x < miceBoundary.Right)
             {
-                isFirstTimeInOpponentsHalf = false;
-                offSetYFromTarget = Random.Range(-1f, 1f);
+                if (isFirstTimeInOpponentsHalf)
+                {
+                    isFirstTimeInOpponentsHalf = false;
+                    offSetYFromTarget = Random.Range(-1f, 1f);
+                }
+                movSpeed = maxMovSpeed * Random.Range(0.1f, 0.3f);
+                targetPos = new Vector2(Mathf.Clamp(mice.position.y + offSetYFromTarget, playerBoundary.Top, playerBoundary.Bottom), startPos.x);
             }
-            movSpeed = maxMovSpeed * Random.Range(0.1f, 0.3f);
-            targetPos = new Vector2(Mathf.Clamp(mice.position.y + offSetYFromTarget, playerBoundary.Top, playerBoundary.Bottom), startPos.x);
-        }
-        else
-        {
-            isFirstTimeInOpponentsHalf = true;
-            movSpeed = Random.Range(maxMovSpeed * 0.4f, maxMovSpeed);
-            targetPos = new Vector2(Mathf.Clamp(mice.position.x, playerBoundary.Left, playerBoundary.Right), 
-                                    Mathf.Clamp(mice.position.y, playerBoundary.Bottom, playerBoundary.Top));
-        }
-        rb.MovePosition(Vector2.MoveTowards(rb.position, targetPos, movSpeed * Time.fixedDeltaTime));
+            else
+            {
+                isFirstTimeInOpponentsHalf = true;
+                movSpeed = Random.Range(maxMovSpeed * 0.4f, maxMovSpeed);
+                targetPos = new Vector2(Mathf.Clamp(mice.position.x, playerBoundary.Left, playerBoundary.Right), 
+                                        Mathf.Clamp(mice.position.y, playerBoundary.Bottom, playerBoundary.Top));
+            }
+            rb.MovePosition(Vector2.MoveTowards(rb.position, targetPos, movSpeed * Time.fixedDeltaTime));
+        } 
+    }
+    public void ResetPosition()
+    {
+        rb.position = startPos;
     }
 }
